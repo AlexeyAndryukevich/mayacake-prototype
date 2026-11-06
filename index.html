@@ -70,7 +70,7 @@ h1,h2,h3{font-weight:400;margin:0;text-wrap:balance}
 .stepper button{width:40px;height:40px;border:0;background:transparent;border-radius:20px;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center}
 .stepper button[disabled]{opacity:.3}
 .stepper span{min-width:28px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
-.stepper.sm button{width:34px;height:34px;font-size:18px}
+.stepper.sm button{width:40px;height:40px;font-size:18px}
 .stepper.sm span{min-width:22px;font-size:14px}
 .ph{background:var(--pink-l);display:flex;align-items:center;justify-content:center;color:var(--olive-d)}
 .card-img{position:relative;overflow:hidden;background:#F7F5F2}
@@ -93,7 +93,31 @@ h1,h2,h3{font-weight:400;margin:0;text-wrap:balance}
 .hero-art .main{position:absolute;left:30px;right:-40px;bottom:-10px;height:270px;border-radius:28px 0 0 0;overflow:hidden}
 .hero-art .main img{width:100%;height:100%;object-fit:cover;object-position:0 60%}
 .lens{position:absolute;border-radius:50%;border:5px solid #fff;box-shadow:0 10px 30px rgba(58,54,51,.18);background-repeat:no-repeat;background-color:#fff}
-.hero-art svg{position:absolute;inset:0;width:100%;height:100%}
+.hero-art svg{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;pointer-events:none}
+.slide.on{opacity:1;pointer-events:auto}
+.slide .main img{transform:scale(1.08);transition:transform 5s ease-out}
+.slide.on .main img{transform:scale(1)}
+.slide .lens{z-index:3;transform:scale(.85) rotate(-8deg);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.slide.on .lens{transform:none}
+.hlabel{position:absolute;right:20px;top:14px;z-index:3;border:0;background:none;display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding:0;opacity:0;transform:translateY(10px);transition:opacity .6s .25s,transform .6s .25s}
+.slide.on .hlabel{opacity:1;transform:none}
+.dots{position:absolute;left:24px;bottom:14px;z-index:4;display:flex;gap:2px;background:rgba(255,255,255,.75);border-radius:99px;padding:0 6px}
+.dots button{width:28px;height:36px;border:0;background:none;display:flex;align-items:center;justify-content:center;padding:0}
+.dots i{display:block;width:7px;height:7px;border-radius:4px;background:#C9BEB8;transition:width .3s,background .3s}
+.dots button.on i{width:18px;background:var(--olive-d)}
+.scr.enter{animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.badge.bump{animation:bump .5s ease}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}
+.toast.fresh{animation:toastIn .3s ease}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}
+.hero h1,.hero .eyebrow,.hero p,.hero .btn{animation:rise .7s both}
+.hero .eyebrow{animation-delay:.05s}.hero h1{animation-delay:.12s}.hero p{animation-delay:.2s}.hero .btn{animation-delay:.28s}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.hero.still h1,.hero.still .eyebrow,.hero.still p,.hero.still .btn{animation:none}
+.pcard,.ncard{transition:transform .15s}
+.pcard:active,.ncard:active,.cat-row:active{transform:scale(.98)}
 .cat-row{display:flex;align-items:center;height:118px;border-radius:26px;background:var(--pink-l);overflow:hidden;text-decoration:none;border:0;width:100%;text-align:left;padding:0}
 .cat-row.cr{background:var(--cream)}
 .cat-row .t{flex:1;padding:0 22px;display:flex;flex-direction:column;gap:2px}
@@ -154,7 +178,7 @@ h1,h2,h3{font-weight:400;margin:0;text-wrap:balance}
 .sum .tot{font-size:18px;font-weight:700;padding-top:8px;border-top:1px solid var(--line)}
 
 /* cabinet */
-.qt{display:grid;grid-template-columns:minmax(0,1fr) 44px 46px 52px 104px;gap:4px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums}
+.qt{display:grid;grid-template-columns:minmax(0,1fr) 40px 44px 44px 120px;gap:4px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums}
 .qt.head{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;padding:8px 0;position:sticky;top:env(safe-area-inset-top,0px);background:#fff;z-index:5}
 .qt .n{font-weight:600;line-height:1.25}
 .qt .r{text-align:right}
@@ -175,9 +199,28 @@ h1,h2,h3{font-weight:400;margin:0;text-wrap:balance}
 .tabs .badge{top:0;right:calc(50% - 26px)}
 .sheet-bg{position:fixed;inset:0;background:var(--shade);z-index:70;display:flex;align-items:flex-end;justify-content:center}
 .sheet{background:#fff;width:100%;max-width:480px;border-radius:26px 26px 0 0;max-height:82vh;overflow:auto;padding:18px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:80;background:var(--ink);color:#fff;border-radius:99px;padding:12px 18px;font-size:14px;display:flex;gap:14px;align-items:center;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(64px + env(safe-area-inset-top,0px));z-index:80;background:var(--ink);color:#fff;border-radius:99px;padding:12px 18px;font-size:14px;display:flex;gap:14px;align-items:center;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
 .toast button{white-space:nowrap;border:0;background:none;color:var(--pink);font-weight:700;padding:4px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;border:1px solid var(--line);border-radius:16px;padding:10px 14px;background:#fff;text-align:left}
+.toggle.on{border-color:var(--olive);background:#FAF9F2}
+.sw{flex:0 0 auto;width:46px;height:28px;border-radius:14px;background:#DDD5CF;position:relative;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.on .sw{background:var(--olive-d)}.on .sw::after{left:21px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.days button{min-height:44px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:600;padding:0}
+.days button.on{background:var(--pink);border-color:var(--pink)}
+.cimg img{width:100%;height:100%;object-fit:cover;display:block}
+.qctl{display:flex;align-items:center;justify-content:space-between;background:var(--ink);color:#fff;border-radius:99px;box-shadow:0 4px 14px rgba(58,54,51,.2);font-variant-numeric:tabular-nums}
+.qctl button{width:44px;height:44px;border:0;background:transparent;color:#fff;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;border-radius:22px}
+.qctl b{min-width:22px;text-align:center;font-size:15px}
+.qctl.img{position:absolute;right:8px;bottom:8px;left:8px}
+.qctl.full{width:100%}
+.qpick{display:flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:99px;min-height:44px;background:var(--ink);color:#fff;font-size:14px;padding:0 14px;box-shadow:0 4px 14px rgba(58,54,51,.2)}
+.qpick span{opacity:.75;font-size:12px}
+.qpick.img{position:absolute;right:8px;bottom:8px;left:8px}
+.qpick.full{width:100%}
+.newtag{display:inline-block;background:var(--olive-d);color:#fff;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;padding:2px 6px;vertical-align:middle}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style></head><body>
 
 <div class="app" id="app"></div>
@@ -215,6 +258,7 @@ const P=[
  {id:'pashteish',cat:'vyp',name:'Ванільний паштейш',opt:45,rec:80,w:'55–60',u:'г',img:'pashteish-vanilnyi',desc:'Португальський десерт: хрусткий рельєфний борт і ванільний заварний крем',al:'Борошно пшеничне, молоко, масло вершкове, жовтки',nu4:['5,52','22,26','27,09','330,59'],store:'У вітрині під кришкою до 72 год при +2…+6 °C'}
 ];
 const PM=Object.fromEntries(P.map(p=>[p.id,p]));
+const HERO=['plombir','malmango','shokvysh','cheesecake','oksamyt'];
 const CITIES=['Київ','Вишневе','Бровари','Ірпінь','Буча','Крюківщина','Коцюбинське','Пуща-Водиця','Вишгород'];
 const SLOTS=['10:00–12:00','12:00–14:00','14:00–16:00','16:00–18:00'];
 const PAST=[['napoleon','',1],['cheesecake','',1],['kruasan','',10],['kruasanm','',6],['ekler','',6],['sinabon','',6],['mac','Фісташка',10],['mac','Солона карамель',10]];
@@ -223,7 +267,10 @@ const PAST=[['napoleon','',1],['cheesecake','',1],['kruasan','',10],['kruasanm',
 const S={mode:'home',logged:false,screen:'home',stack:[],cat:'all',pid:null,
   cart:{home:[],biz:[]},pick:{},pickOne:null,pq:1,acc:{},sheet:null,toast:null,
   form:{name:'',phone:'+380 ',city:'Київ',addr:'',date:0,slot:0,comment:'',pay:'card'},errs:{},
-  orderNo:1024,lastDone:null,history:[{no:987,date:'3 листопада',lines:PAST.map(([id,fl,q])=>({id,fl,q}))}],
+  heroI:0,_last:null,_count:0,orderNo:1024,lastDone:null,history:[{no:987,date:'3 листопада',lines:PAST.map(([id,fl,q])=>({id,fl,q}))},{no:961,date:'31 жовтня',lines:[{id:'oksamyt',fl:'',q:1},{id:'kruasan',fl:'',q:12},{id:'pashteish',fl:'',q:10},{id:'tart',fl:'',q:6},{id:'pechyvo',fl:'',q:10}]}],
+  gift:{on:false,name:'',phone:'+380 ',card:'',hide:true},remind:false,
+  party:{guests:12,cake:'plombir',mac:true},
+  standing:{on:false,days:[2,5],remind:true,skip:false,edit:false},sortMargin:false,
   login:{phone:'+380 ',sent:false,code:''}};
 const biz=()=>S.mode==='biz';
 const cart=()=>S.cart[S.mode];
@@ -270,7 +317,7 @@ function ico(n,s=22){const p={
  tg:'<path d="M21 4L3 11l6 2.2L18 7l-7 7.5V20l3.5-3.6L18 19z"/>',
  ig:'<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/>',
  gift:'<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M3 9h18M12 9v11"/><path d="M12 9c-2-3-5-4-6-2s2 2 6 2c4 0 7 0 6-2s-4-1-6 2"/>',
- check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>', out:'<path d="M15 4h4v16h-4"/><path d="M10 8l-4 4 4 4M6 12h10"/>'}[n];
+ check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>', people:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.4"/><path d="M15.5 14.2A4.5 4.5 0 0 1 21 18.5"/>', bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>', cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>', star:'<path d="M12 4l2.4 5 5.4.6-4 3.7 1.1 5.4L12 16l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/>', out:'<path d="M15 4h4v16h-4"/><path d="M10 8l-4 4 4 4M6 12h10"/>'}[n];
  return `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`}
 
 // ---------- NAV ----------
@@ -278,13 +325,13 @@ const ROOTS=['home','catalog','cart','contacts','cabinet'];
 function go(screen,extra={}){if(ROOTS.includes(screen))S.stack=[];else S.stack.push({screen:S.screen,pid:S.pid});Object.assign(S,{screen},extra);S.sheet=null;render();window.scrollTo(0,0)}
 function back(){const p=S.stack.pop();if(!p){go(biz()?'cabinet':'home');return}Object.assign(S,p);render();window.scrollTo(0,0)}
 function openProduct(id){const p=PM[id];S.pick={};S.pickOne=p.fl&&p.flMode==='one'?p.fl[0]:null;S.pq=minOf(p);S.acc={};if(p.flMode==='multi')S.pq=0;go('product',{pid:id})}
-let toastT;function toast(t,act){S.toast={t,act};render();clearTimeout(toastT);toastT=setTimeout(()=>{S.toast=null;render()},2600)}
+let toastT;function toast(t,act){S.toast={t,act,fresh:true};render();clearTimeout(toastT);toastT=setTimeout(()=>{S.toast=null;render()},2600)}
 function setMode(m){if(m==='biz'&&!S.logged){go('login');return}S.mode=m;go(m==='biz'?'cabinet':'home')}
 
 // ---------- PIECES ----------
 function header(){
   const pinkh=S.screen==='home'&&!biz();
-  const titles={catalog:'Каталог',cart:'Кошик',checkout:'Оформлення',done:'Готово',login:'Кабінет партнера',contacts:'Контакти',cabinet:'Кабінет партнера'};
+  const titles={party:'Планувальник свята',catalog:'Каталог',cart:'Кошик',checkout:'Оформлення',done:'Готово',login:'Кабінет партнера',contacts:'Контакти',cabinet:'Кабінет партнера'};
   const showBack=S.stack.length>0;
   const mid=(S.screen==='home'||S.screen==='product')?`<img class="logo" src="${IMG['logo-mayacake']}" alt="MayaCake">`:`<span class="htitle">${titles[S.screen]||''}</span>`;
   return `<div class="hdr ${pinkh?'pinkh':''} wrap">
@@ -302,13 +349,13 @@ function bizMeta(p){if(!biz())return '';if(!sale(p))return `<div class="biz-meta
   return `<div class="biz-meta">продаж ${money(sale(p))} грн${p.cake?` (10 шм. × ${p.rec})`:''}<br><b>маржа +${money(margin(p))} грн · ${pct(p)}%</b></div>`}
 function tabs(){
   const t=biz()?[['cabinet','Кабінет','shop'],['catalog','Каталог','grid'],['cart','Кошик','bag'],['contacts','Контакти','phone']]:[['home','Головна','home'],['catalog','Каталог','grid'],['cart','Кошик','bag'],['contacts','Контакти','phone']];
-  const cur=S.screen==='product'?'catalog':(['checkout','done'].includes(S.screen)?'cart':S.screen);
+  const cur=S.screen==='party'?'home':S.screen==='product'?'catalog':(['checkout','done'].includes(S.screen)?'cart':S.screen);
   return `<nav class="tabs" aria-label="Навігація"><div class="in">${t.map(([k,l,i])=>`<button class="${cur===k?'on':''}" data-a="tab" data-v="${k}" ${cur===k?'aria-current="page"':''}><span class="ic">${ico(i)}</span>${l}${k==='cart'&&cartCount()?`<span class="badge">${cartCount()}</span>`:''}</button>`).join('')}</div></nav>`}
 
 // ---------- SCREENS ----------
 function scHome(){
   const news=P.filter(p=>p.isNew);
-  return `<section class="hero">
+  return `<section class="hero ${S._entered?'still':''}">
     <div class="wrap" style="padding-block:4px 0">${seg()}</div>
     <div class="wrap" style="padding-block:24px 0">
       <div class="eyebrow">крафтова кондитерська · Київ</div>
@@ -317,11 +364,13 @@ function scHome(){
       <button class="btn wh" data-a="tab" data-v="catalog">Обрати десерт</button>
     </div>
     <div class="hero-art">
-      <div class="main">${img('tort-yagidnyi-plombir','Торт Ягідний пломбір у розрізі')}</div>
+      ${HERO.map((id,i)=>{const p=PM[id];return `<div class="slide ${i===S.heroI?'on':''}" data-slide="${i}"><div class="main"><img src="${IMG[p.img]}" alt="${esc(p.name)} у розрізі"></div></div>`}).join('')}
       <svg viewBox="0 0 390 400" preserveAspectRatio="xMinYMin meet" aria-hidden="true"><line x1="150" y1="138" x2="200" y2="150" stroke="#fff" stroke-width="1.2"/><line x1="100" y1="160" x2="200" y2="150" stroke="#fff" stroke-width="1.2"/><line x1="268" y1="96" x2="200" y2="150" stroke="#fff" stroke-width="1.2"/><line x1="306" y1="96" x2="200" y2="150" stroke="#fff" stroke-width="1.2"/></svg>
-      <div class="lens" style="left:18px;top:4px;width:150px;height:150px;background-image:url('${IMG['tort-yagidnyi-plombir']}');background-size:260%;background-position:22% 40%"></div>
-      <button data-a="open" data-v="plombir" style="position:absolute;right:20px;top:14px;border:0;background:none;display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding:0">
-        <span style="font-family:var(--f-display);font-size:20px">Ягідний пломбір</span><span class="pill w big">${price(PM.plombir)}<sup>грн</sup></span><span class="pill l">d18 / 1,6<sup>кг</sup></span></button>
+      ${HERO.map((id,i)=>{const p=PM[id];return `<div class="slide ${i===S.heroI?'on':''}" data-slide="${i}">
+        <div class="lens" style="left:18px;top:4px;width:150px;height:150px;background-image:url('${IMG[p.img]}');background-size:260%;background-position:22% 40%"></div>
+        <button class="hlabel" data-a="open" data-v="${p.id}" tabindex="${i===S.heroI?0:-1}">
+          ${p.isNew?'<span class="newtag" style="background:var(--olive)">новинка</span>':''}<span style="font-family:var(--f-display);font-size:20px;text-align:right;max-width:190px;line-height:1.1">${esc(p.name)}</span><span class="pill w big">${price(p)}<sup>грн</sup></span><span class="pill l">${esc(p.w)}<sup>${p.u}</sup></span></button></div>`}).join('')}
+      <div class="dots" role="group" aria-label="Десерти на головному екрані">${HERO.map((id,i)=>`<button data-a="hero" data-v="${i}" class="${i===S.heroI?'on':''}" aria-label="${esc(PM[id].name)}"><i></i></button>`).join('')}</div>
     </div>
   </section>
   <section class="wrap sec" style="display:flex;flex-direction:column;gap:12px">
@@ -329,6 +378,9 @@ function scHome(){
     ${[['tort','Торти','7 позицій · бенто','tort-shokolad-vyshnia'],['tist','Тістечка','еклери, шу, тарти, павлова','shu-malyna'],['mac','Макарон','19 смаків · від 10 шт','makaron'],['vyp','Випічка','круасани, сінабони, паштейш','kruasan-myhdalevyi']].map(([k,n,s,im])=>`
       <button class="cat-row ${k==='vyp'?'cr':''}" data-a="cat" data-v="${k}"><span class="t"><b>${n}</b><span class="small mute">${s}</span></span><span class="c">${img(im)}</span></button>`).join('')}
   </section>
+  <section class="wrap" style="padding-block:24px 0"><button data-a="tab" data-v="party" style="width:100%;border:0;text-align:left;background:var(--cream);border-radius:26px;padding:20px;display:flex;gap:16px;align-items:center">
+    <span style="flex:0 0 auto;width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--olive-d)">${ico('people',28)}</span>
+    <span style="flex:1"><span class="newtag">нове</span><span style="display:block;font-family:var(--f-display);font-size:22px;line-height:1.15;margin-top:6px">Скільки десертів на свято?</span><span class="small mute">Вкажіть кількість гостей — порахуємо торти й макарон</span></span>${ico('back',18).replace('M15 5l-7 7 7 7','M9 5l7 7-7 7')}</button></section>
   <section style="margin-top:32px;padding-block:28px;background:var(--pink-l)">
     <div class="wrap between" style="margin-bottom:14px"><h2 class="h2">Новинки</h2><button class="link" data-a="cat" data-v="new">Усі новинки</button></div>
     <div class="hscroll wrap">${news.map(p=>`
@@ -336,7 +388,7 @@ function scHome(){
         <button data-a="open" data-v="${p.id}" style="border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:8px"><span class="ci">${img(p.img,p.name)}</span><h3>${esc(p.name)}</h3></button>
         <div>${pills(p)}</div>
         ${demoPrice(p)?'<span class="small mute"><i>демо-ціна</i></span>':''}${p.minNote?`<span class="small mute">${p.minNote}</span>`:''}
-        <button class="btn o full" style="min-height:44px" data-a="quick" data-v="${p.id}">У кошик</button>
+        ${inCartCtl(p,'full')}
       </div>`).join('')}</div>
   </section>
   <section class="wrap sec" style="display:flex;flex-direction:column;gap:20px;align-items:center">
@@ -358,18 +410,26 @@ function footer(){return `<footer class="wrap" style="margin-top:32px;padding-bl
   <div class="row"><a class="btn wh" style="min-height:44px;padding:0 16px;font-weight:500" href="https://instagram.com/maya.cake.kyiv" target="_blank" rel="noopener">${ico('ig',18)}@maya.cake.kyiv</a><button class="btn wh" style="min-height:44px;padding:0 16px;font-weight:500" data-a="tg">${ico('tg',18)}Telegram</button></div>
   <span class="small mute">[посилання на Telegram уточнити]</span></footer>`}
 
+function inCartCtl(p,kind){const q=qtyOf(p.id);const nm=esc(p.name);
+  if(!q)return kind==='img'?`<button class="plus" data-a="quick" data-v="${p.id}" aria-label="Додати: ${nm}">${ico('plus',20)}</button>`:`<button class="btn o full" style="min-height:44px" data-a="quick" data-v="${p.id}">У кошик</button>`;
+  if(p.fl)return `<button class="qpick ${kind}" data-a="flsheet" data-v="${p.id}" aria-label="${nm}: ${q} шт, змінити">${ico('bag',16)}<b>${q} шт</b><span>змінити</span></button>`;
+  const mn=minOf(p);
+  return `<span class="qctl ${kind}" role="group" aria-label="${nm} у кошику"><button data-a="qq" data-v="${p.id}" data-d="-1" aria-label="${q<=mn?'Прибрати':'Менше'}: ${nm}">${q<=mn?ico('trash',17):'−'}</button><b aria-live="polite">${q}</b><button data-a="qq" data-v="${p.id}" data-d="1" aria-label="Більше: ${nm}">+</button></span>`}
 function scCatalog(){
   const chips=[['all','Усі'],['new','Новинки'],...CATS];
   let body='';
   const card=p=>`<div class="pcard">
     <div style="position:relative"><button class="card-img" data-a="open" data-v="${p.id}" aria-label="${esc(p.name)}">${img(p.img,p.name)}</button>
       ${p.isNew?'<span class="flag" style="top:12px">новинка</span>':''}
-      <button class="plus" data-a="quick" data-v="${p.id}" aria-label="Додати: ${esc(p.name)}">${ico('plus',20)}</button></div>
+      ${inCartCtl(p,'img')}</div>
     <h3>${esc(p.name)}</h3>
     <div style="display:flex;gap:6px;flex-wrap:wrap">${pills(p)}</div>
     ${demoPrice(p)?'<span class="small mute"><i>демо-ціна</i></span>':''}
     ${p.minNote?`<span class="small mute">${p.minNote}</span>`:''}${bizMeta(p)}</div>`;
-  if(S.cat==='all'){
+  if(biz()&&S.sortMargin){
+    const list=(S.cat==='all'?P:S.cat==='new'?P.filter(p=>p.isNew):P.filter(p=>p.cat===S.cat)).filter(p=>margin(p)).sort((a,b)=>pct(b)-pct(a));
+    body=`<p class="small mute" style="margin:14px 0 0">Відсортовано за маржею у % від рекомендованої ціни продажу</p><div class="grid2" style="margin-top:12px">${list.map(card).join('')}</div>`;
+  } else if(S.cat==='all'){
     body=CATS.map(([k,n])=>{const g=`<h2 class="gh">${n}</h2><div class="grid2">${P.filter(p=>p.cat===k).map(card).join('')}</div>`;return k==='vyp'?`<div class="band-cream wrap" style="margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))">${g.replace('class="gh"','class="gh" style="margin-top:0"')}</div>`:g}).join('');
   } else {
     const list=S.cat==='new'?P.filter(p=>p.isNew):P.filter(p=>p.cat===S.cat);
@@ -379,6 +439,7 @@ function scCatalog(){
   return `<div class="wrap" style="${bg}padding-block:14px 28px;min-height:70vh">
     ${biz()?`<div class="note" style="margin-bottom:12px;font-size:13px">Оптові ціни для «Зерна». Під кожною позицією — ваша маржа.</div>`:''}
     <div class="chips" role="tablist">${chips.map(([k,n])=>`<button class="chip ${S.cat===k?'on':''}" data-a="cat" data-v="${k}" role="tab" aria-selected="${S.cat===k}">${n}</button>`).join('')}</div>
+    ${biz()?`<button class="toggle ${S.sortMargin?'on':''}" style="margin-top:10px" data-a="sortm" aria-pressed="${S.sortMargin}"><span><b style="font-size:14px">Спочатку найвигідніші</b><span class="small mute" style="display:block">сортування за маржею</span></span><span class="sw"></span></button>`:''}
     ${body}</div>`}
 
 function scProduct(){
@@ -453,13 +514,13 @@ function scCart(){
   if(!c.length)return `<div class="wrap" style="padding-block:60px;text-align:center;display:flex;flex-direction:column;gap:16px;align-items:center">
     <div class="ph" style="width:96px;height:96px;border-radius:50%">${ico('bag',40)}</div><h2 class="h2">Кошик порожній</h2>
     <p class="mute" style="margin:0">${biz()?'Повторіть минуле замовлення або зберіть нове.':'Почніть з новинок — їх уже чекають.'}</p>
-    ${biz()?`<button class="btn" data-a="repeat">${ico('repeat',18)}Повторити минуле замовлення</button>`:''}<button class="btn o" data-a="tab" data-v="catalog">До каталогу</button></div>`;
+    ${biz()?`<button class="btn" data-a="repeat" data-v="0">${ico('repeat',18)}Повторити минуле замовлення</button>`:`<button class="btn" data-a="tab" data-v="party">${ico('people',18)}Порахувати десерти на свято</button>`}<button class="btn o" data-a="tab" data-v="catalog">До каталогу</button></div>`;
   const sub=subtotal();const issues=minIssues();
   const hasMac=c.some(l=>l.id==='mac'||l.id==='macp');const hasBox=c.some(l=>l.id==='box');
   const newOnes=P.filter(p=>p.isNew&&!c.some(l=>l.id===p.id));
   const blocked=sub<700||issues.length>0;
   return `<div class="wrap" style="padding-block:10px 140px;display:flex;flex-direction:column;gap:16px">
-    ${biz()?`<div class="note row small">${ico('clock',18)}<span>${deadlineText().t}</span></div>`:''}
+    <div class="note row small">${ico('clock',18)}<span>${deadlineText().t}</span></div>
     <div>${cartRows()}</div>
     ${issues.map(p=>`<div class="note warn small"><b>${esc(p.name)}:</b> мінімум ${minOf(p)} шт, зараз ${qtyOf(p.id)}. ${p.flMode==='multi'?'Додайте смаки.':''}</div>`).join('')}
     <label class="field"><span style="font-size:13px;font-weight:600">Куди везти</span><select id="city" data-f="city">${CITIES.map(x=>`<option ${S.form.city===x?'selected':''}>${x}</option>`).join('')}</select></label>
@@ -489,12 +550,20 @@ function scCheckout(){const f=S.form,e=S.errs,ds=dates(),sub=subtotal();
       <div class="chips">${ds.map((d,i)=>`<button type="button" class="chip ${f.date===i?'on':''}" data-a="date" data-v="${i}">${i===0?'Найближча · ':''}${fmtD(d)}</button>`).join('')}</div>
       <span class="small mute">${new Date().getHours()<14?'Зараз до 14:00 — можемо привезти вже завтра.':'Після 14:00 найближча дата зсувається на день.'}</span></div>
     <div class="field"><span style="font-size:13px;font-weight:600">Час</span><div class="chips">${SLOTS.map((s,i)=>`<button type="button" class="chip ${f.slot===i?'on':''}" data-a="slot" data-v="${i}">${s}</button>`).join('')}</div></div>
+    ${!biz()?`<button type="button" class="toggle ${S.gift.on?'on':''}" data-a="gift" aria-pressed="${S.gift.on}"><span class="row">${ico('gift',24)}<span><b style="font-size:14px">Це подарунок</b><span class="small mute" style="display:block">привеземо іншій людині, з листівкою</span></span></span><span class="sw"></span></button>
+    ${S.gift.on?`<div style="display:flex;flex-direction:column;gap:12px;border-left:2px solid var(--pink);padding-left:14px">
+      <div class="field"><label for="gname">Ім'я отримувача</label><input id="gname" data-g="name" value="${esc(S.gift.name)}">${e.gname?`<span class="err">${e.gname}</span>`:''}</div>
+      <div class="field"><label for="gphone">Телефон отримувача</label><input id="gphone" type="tel" data-g="phone" value="${esc(S.gift.phone)}"><span class="small mute">Кур'єр подзвонить отримувачу, а не вам — сюрприз не зіпсується</span></div>
+      <div class="field"><label for="gcard">Текст листівки <span class="mute" style="font-weight:400">· до 160 символів</span></label><textarea id="gcard" data-g="card" maxlength="160" placeholder="З днем народження! Нехай цей рік буде смачним">${esc(S.gift.card)}</textarea></div>
+      <button type="button" class="toggle ${S.gift.hide?'on':''}" data-a="gifthide" aria-pressed="${S.gift.hide}"><span style="font-size:14px">Не вкладати чек із ціною</span><span class="sw"></span></button>
+    </div>`:''}`:''}
     <div class="field"><label for="comment">Коментар</label><textarea id="comment" data-f="comment" placeholder="Напис на торті, як знайти вхід…">${esc(f.comment)}</textarea></div>
     <div class="field"><span style="font-size:13px;font-weight:600">Оплата</span>${pays.map(([k,l])=>`<button type="button" class="radio ${f.pay===k?'on':''}" data-a="pay" data-v="${k}" aria-pressed="${f.pay===k}"><i></i><span>${l}</span></button>`).join('')}</div>
     <div class="sum"><div class="between"><span>Товари · ${cartCount()} шт</span><span>${money(sub)} грн</span></div><div class="between"><span>Доставка</span><span>${fee(sub)?fee(sub)+' грн':'безкоштовно'}</span></div><div class="between tot"><span>До сплати</span><span>${money(sub+fee(sub))} грн</span></div></div>
   </form>
   <div class="stick"><div class="in"><button class="btn full" data-a="submit">Оформити замовлення · ${money(sub+fee(sub))} грн</button></div></div>`}
 
+function groupLines(ls){const out=[];ls.forEach(l=>{const p=PM[l.id];if(p.flMode==='multi'){const g=out.find(x=>x.id===l.id);if(g){g.q+=l.q;g.sum+=l.sum;g.n++;g.fl=g.n+' смаків'}else out.push({...l,n:1})}else out.push({...l})});return out}
 function scDone(){const o=S.lastDone;return `<div class="wrap" style="padding-block:30px 40px;display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center">
   <div style="width:96px;height:96px;border-radius:50%;background:var(--pink-l);display:flex;align-items:center;justify-content:center;color:var(--olive-d)">${ico('check',44)}</div>
   <h1 class="h2" style="font-size:34px">Дякуємо!<br>Замовлення №${o.no} прийнято</h1>
@@ -503,9 +572,11 @@ function scDone(){const o=S.lastDone;return `<div class="wrap" style="padding-bl
     <div class="between"><span class="mute">Доставка</span><b>${o.date}, ${o.slot}</b></div>
     <div class="between"><span class="mute">Адреса</span><span style="text-align:right">${esc(o.city)}, ${esc(o.addr)}</span></div>
     <div style="height:1px;background:#DDD5CF;margin:4px 0"></div>
-    ${o.lines.map(l=>`<div class="between small"><span>${esc(PM[l.id].name)}${l.fl?` · ${esc(l.fl)}`:''} × ${l.q}</span><span>${money(l.sum)} грн</span></div>`).join('')}
+    ${groupLines(o.lines).map(l=>`<div class="between small"><span>${esc(PM[l.id].name)}${l.fl?` · ${esc(l.fl)}`:''} × ${l.q}</span><span>${money(l.sum)} грн</span></div>`).join('')}
     <div class="between" style="font-weight:700;padding-top:6px"><span>Разом</span><span>${money(o.total)} грн</span></div></div>
-  ${o.biz?`<div class="note row small" style="text-align:left">${ico('repeat',20)}<span>Замовлення збережене в кабінеті — наступного разу повторите його у два кліки.</span></div>`:''}
+  ${o.gift?`<div class="note row small" style="text-align:left;width:100%">${ico('gift',22)}<span>Подарунок для <b>${esc(o.gift.name)}</b>${o.gift.card?` · листівка: «${esc(o.gift.card)}»`:''}${o.gift.hide?' · без чека з ціною':''}</span></div>`:''}
+  ${o.biz?`<div class="note row small" style="text-align:left">${ico('repeat',20)}<span>Замовлення збережене в кабінеті — наступного разу повторите його у два кліки.</span></div>`:
+  `<button class="toggle ${S.remind?'on':''}" data-a="remind" aria-pressed="${S.remind}" style="text-align:left"><span class="row">${ico('bell',22)}<span><b style="font-size:14px">Нагадати про цю дату через рік</b><span class="small mute" style="display:block">напишемо за 3 дні до ${o.dd.getDate()} ${MON[o.dd.getMonth()]} ${o.dd.getFullYear()+1} — із цим самим замовленням</span></span></span><span class="sw"></span></button>`}
   <button class="btn full" data-a="tg">${ico('tg',18)}Відкрити Telegram</button>
   <button class="btn o full" data-a="tab" data-v="${o.biz?'cabinet':'home'}">${o.biz?'До кабінету':'На головну'}</button></div>`}
 
@@ -518,6 +589,22 @@ function scLogin(){const L=S.login;return `<div class="wrap" style="padding-bloc
   <div class="note small"><b>Демо-вхід.</b> У кабінеті — кав'ярня «Зерно» з історією замовлень.</div>
   <button class="link" style="align-self:center" data-a="mode" data-v="home">Я купую для дому</button></div>`}
 
+const DAYN=['Нд','Пн','Вт','Ср','Чт','Пт','Сб'];
+function standingNext(){const ds=S.standing.days;if(!ds.length)return null;const d=new Date(dates()[0]);const found=[];for(let i=0;i<21&&found.length<2;i++){if(ds.includes(d.getDay()))found.push(new Date(d));d.setDate(d.getDate()+1)}return S.standing.skip?found[1]:found[0]}
+function standingCard(lt){const st=S.standing;const order=[0,1,2,3,4,5,6];const ord=[1,2,3,4,5,6,0];
+  const days=`<div class="days">${ord.map(d=>`<button class="${st.days.includes(d)?'on':''}" data-a="sday" data-v="${d}" aria-pressed="${st.days.includes(d)}">${DAYN[d]}</button>`).join('')}</div>`;
+  if(!st.on||st.edit)return `<div style="background:var(--pink-l);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px">
+    <div class="row" style="align-items:flex-start">${ico('cal',26)}<div><span class="newtag">нове</span><b style="display:block;font-family:var(--f-display);font-size:22px;font-weight:400;margin-top:4px">Постійне замовлення</b><span class="small mute">Повторюємо це замовлення у вибрані дні. Напередодні о 12:00 надішлемо в Telegram на підтвердження — змініть або пропустіть одним дотиком.</span></div></div>
+    <span class="small" style="font-weight:600">Дні доставки</span>${days}
+    <button class="toggle ${st.remind?'on':''}" data-a="sremind" aria-pressed="${st.remind}"><span style="font-size:14px">Нагадування о 12:00 напередодні</span><span class="sw"></span></button>
+    <button class="btn full" data-a="son" ${st.days.length?'':'disabled'}>${st.edit?'Зберегти графік':`Увімкнути · ${st.days.length} дост./тиждень`}</button></div>`;
+  const nx=standingNext();const prev=new Date(nx);prev.setDate(prev.getDate()-1);
+  return `<div style="background:var(--pink-l);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px">
+    <div class="between" style="align-items:center"><b class="row" style="font-family:var(--f-display);font-size:22px;font-weight:400">${ico('cal',22)}Постійне замовлення</b><span class="pill w" style="font-size:12px;color:#3E5E39">увімкнено</span></div>
+    <div class="small">Щотижня: <b>${[1,2,3,4,5,6,0].filter(d=>st.days.includes(d)).map(d=>DAYN[d]).join(', ')}</b> · ≈ ${money(lt)} грн за доставку</div>
+    <div style="background:#fff;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:2px"><span class="small mute">Наступна доставка${st.skip?' (одну пропущено)':''}</span><b>${fmtD(nx)}</b>${st.remind?`<span class="small mute">нагадаємо ${fmtD(prev)} о 12:00 · підтвердити до 14:00</span>`:''}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="btn o" style="min-height:44px;font-size:14px;padding:0 10px" data-a="sskip">${st.skip?'Повернути':'Пропустити наступну'}</button><button class="btn o" style="min-height:44px;font-size:14px;padding:0 10px" data-a="sedit">Змінити дні</button></div>
+    <button class="link" style="align-self:center;color:var(--mute)" data-a="soff">Вимкнути</button></div>`}
 function scCabinet(){
   const last=S.history[0];const lt=last.lines.reduce((a,l)=>a+PM[l.id].opt*l.q,0);const dl=deadlineText();
   const row=p=>{const fl=!!p.fl;const q=qtyOf(p.id);
@@ -534,8 +621,10 @@ function scCabinet(){
     <div style="border:1px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:12px">
       <div class="between"><b>Минуле замовлення №${last.no}</b><span class="small mute">${last.date}</span></div>
       <div class="row" style="justify-content:space-between"><div class="thumbs">${[...new Set(last.lines.map(l=>l.id))].slice(0,5).map(id=>`<div>${img(PM[id].img)}</div>`).join('')}</div><span class="small mute">${last.lines.length} позицій · ${money(lt)} грн</span></div>
-      <button class="btn full" data-a="repeat">${ico('repeat',18)}Повторити минуле замовлення</button>
+      <button class="btn full" data-a="repeat" data-v="0">${ico('repeat',18)}Повторити замовлення</button>
       <span class="small mute" style="text-align:center">Позиції потраплять у кошик — там можна змінити кількість і додати новинки</span></div>
+    ${standingCard(lt)}
+    ${S.history.length>1?`<div style="display:flex;flex-direction:column;gap:0"><b style="margin-bottom:6px">Інші замовлення</b>${S.history.slice(1,4).map((h,i)=>`<div class="between" style="align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><span><b style="font-size:14px">№${h.no}</b> <span class="small mute">· ${h.date} · ${h.lines.length} поз. · ${money(h.lines.reduce((a,l)=>a+PM[l.id].opt*l.q,0))} грн</span></span><button class="chip sm" data-a="repeat" data-v="${i+1}">Повторити</button></div>`).join('')}</div>`:''}
     <div><div class="between"><h2 class="h2">Швидке замовлення</h2></div><p class="small mute" style="margin:4px 0 0">Ціни в грн: опт, рекомендована ціна продажу (торти — 10 шматочків) і ваша маржа.</p></div>
     <div><div class="qt head"><span>Позиція</span><span class="r">Опт</span><span class="r">Рек.</span><span class="r">Маржа</span><span></span></div>
       ${CATS.map(([k,n])=>`<div style="font-family:var(--f-display);font-size:20px;padding:14px 0 2px;${k==='vyp'?'background:var(--cream);margin-inline:-16px;padding-inline:16px':''}">${n}</div>${P.filter(p=>p.cat===k).map(row).join('')}`).join('')}</div>
@@ -544,6 +633,29 @@ function scCabinet(){
     <div style="flex:1;min-width:0"><b>${money(sub)} грн</b> <span class="small mute">· ${cartCount()} шт</span><div class="small" style="color:${sub>=700?'#3E5E39':'var(--warn)'}">${sub>=700?`маржа ≈ +${money(marginTotal())} грн`:`ще ${money(700-sub)} грн до мінімуму 700`}</div></div>
     <button class="btn" style="min-height:44px" data-a="tab" data-v="cart" ${cartCount()?'':'disabled'}>Кошик</button></div></div></div>`}
 
+function partyCalc(){const g=S.party.guests;const cakes=Math.ceil(g/10);const mac=S.party.mac?Math.ceil(g/10)*10:0;const p=PM[S.party.cake];
+  const total=cakes*price(p)+mac*price(PM.mac);return {g,cakes,mac,p,total,pieces:cakes*10}}
+function scParty(){const c=partyCalc();const cakesList=P.filter(p=>p.cake&&p.rec);
+  return `<div class="wrap" style="padding-block:18px 150px;display:flex;flex-direction:column;gap:20px">
+    <p class="mute" style="margin:0">Скажіть, скільки буде гостей, — порахуємо, скільки тортів і макарон замовити, щоб вистачило всім і нічого не лишилось.</p>
+    <div class="note" style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:22px">
+      <span class="small" style="letter-spacing:.15em;text-transform:uppercase">гостей</span>
+      <div class="row" style="gap:18px"><button class="ibtn" style="background:#fff;width:52px;height:52px;border-radius:26px;font-size:24px" data-a="guests" data-d="-2" aria-label="Менше гостей">−</button>
+      <span style="font-family:var(--f-display);font-size:56px;line-height:1;min-width:80px;text-align:center;font-variant-numeric:tabular-nums">${c.g}</span>
+      <button class="ibtn" style="background:#fff;width:52px;height:52px;border-radius:26px;font-size:24px" data-a="guests" data-d="2" aria-label="Більше гостей">+</button></div>
+      <div class="chips">${[6,10,16,20,30].map(n=>`<button class="chip sm ${c.g===n?'on':''}" data-a="guestsset" data-v="${n}">${n}</button>`).join('')}</div></div>
+    <div style="display:flex;flex-direction:column;gap:10px"><b>Торт</b><div class="hscroll">${cakesList.map(p=>`<button data-a="pcake" data-v="${p.id}" style="flex:0 0 112px;border:0;background:none;padding:0;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center">
+      <span class="cimg" style="width:96px;height:96px;border-radius:50%;overflow:hidden;border:4px solid ${S.party.cake===p.id?'var(--olive)':'var(--pink-l)'}">${img(p.img,p.name)}</span><span class="small" style="font-weight:${S.party.cake===p.id?700:500};line-height:1.2">${esc(p.name)}</span></button>`).join('')}</div></div>
+    <button class="toggle ${S.party.mac?'on':''}" data-a="pmac" aria-pressed="${S.party.mac}"><span><b style="font-size:14px">Додати макарон до кави</b><span class="small mute" style="display:block">по одному на гостя, асорті смаків</span></span><span class="sw"></span></button>
+    <div style="border:1px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px">
+      <b style="font-family:var(--f-display);font-size:22px;font-weight:400">Вам знадобиться</b>
+      <div class="between"><span>${esc(c.p.name)} × ${c.cakes}</span><span>${money(c.cakes*price(c.p))} грн</span></div>
+      <span class="small mute" style="margin-top:-6px">${c.pieces} шматочків на ${c.g} гостей · ${esc(c.p.w)} ${c.p.u}</span>
+      ${c.mac?`<div class="between"><span>Макарон асорті × ${c.mac}</span><span>${money(c.mac*price(PM.mac))} грн</span></div>`:''}
+      <div class="between" style="font-weight:700;padding-top:8px;border-top:1px solid var(--line)"><span>Разом</span><span>${money(c.total)} грн</span></div>
+      <span class="small mute">1 торт = 10 шматочків, як у прайсі MayaCake${c.mac?'; 1 макарон на гостя — наша порада':''}.${demoPrice(c.p)?' Ціна торта — демо.':''}</span></div>
+  </div>
+  <div class="stick"><div class="in"><button class="btn full" data-a="partyadd">Додати все в кошик · ${money(c.total)} грн</button></div></div>`}
 function scContacts(){return `<div class="wrap" style="padding-block:20px 40px;display:flex;flex-direction:column;gap:16px">
   <div class="note cream" style="display:flex;flex-direction:column;gap:6px"><span class="small mute">Телефон</span><span style="font-family:var(--f-display);font-size:28px;user-select:all">+380 63 410 26 25</span></div>
   <div class="row"><a class="btn o" href="https://instagram.com/maya.cake.kyiv" target="_blank" rel="noopener">${ico('ig',18)}@maya.cake.kyiv</a><button class="btn o" data-a="tg">${ico('tg',18)}Telegram</button></div>
@@ -562,12 +674,23 @@ function flSheet(){const p=PM[S.sheet];const tot=Object.values(S.pick).reduce((a
 
 // ---------- RENDER ----------
 function render(){
-  const map={home:scHome,catalog:scCatalog,product:scProduct,cart:scCart,checkout:scCheckout,done:scDone,login:scLogin,cabinet:scCabinet,contacts:scContacts};
+  const map={party:scParty,home:scHome,catalog:scCatalog,product:scProduct,cart:scCart,checkout:scCheckout,done:scDone,login:scLogin,cabinet:scCabinet,contacts:scContacts};
   const showHeader=S.screen!=='cabinet';
-  document.getElementById('app').innerHTML=
-    `<div class="demo"><span>Демо-версія. Ціни умовні</span></div>`+(showHeader?header():'')+map[S.screen]()+tabs()+
-    (S.sheet?flSheet():'')+(S.toast?`<div class="toast" role="status">${esc(S.toast.t)}${S.toast.act?`<button data-a="tab" data-v="cart">У кошик</button>`:''}</div>`:'');
+  const entering=S._last!==S.screen;const bump=cartCount()>S._count;
+  if(!entering&&S.screen==='home')S._entered=true; if(entering)S._entered=false;
+  let html=`<div class="demo"><span>Демо-версія. Ціни умовні</span></div>`+(showHeader?header():'')+`<div class="scr ${entering?'enter':''}">`+map[S.screen]()+`</div>`+tabs()+
+    (S.sheet?flSheet():'')+(S.toast?`<div class="toast ${S.toast.fresh?'fresh':''}" role="status">${esc(S.toast.t)}${S.toast.act?`<button data-a="tab" data-v="cart">У кошик</button>`:''}</div>`:'');
+  if(bump)html=html.replace(/class="badge"/g,'class="badge bump"');
+  document.getElementById('app').innerHTML=html;
+  if(S.toast)S.toast.fresh=false;S._last=S.screen;S._count=cartCount();
+  if(S.screen==='home')S._entered=true;
 }
+function showSlide(i){S.heroI=(i+HERO.length)%HERO.length;document.querySelectorAll('[data-slide]').forEach(el=>{const on=+el.dataset.slide===S.heroI;el.classList.toggle('on',on);const b=el.querySelector('.hlabel');if(b)b.tabIndex=on?0:-1});document.querySelectorAll('.dots button').forEach((b,k)=>b.classList.toggle('on',k===S.heroI))}
+const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let heroTimer;function startHero(){clearInterval(heroTimer);if(reduceMotion)return;heroTimer=setInterval(()=>{if(S.screen==='home'&&!biz()&&!S.sheet&&!document.hidden)showSlide(S.heroI+1)},4200)}
+startHero();
+let tx=null;document.addEventListener('touchstart',e=>{if(e.target.closest('.hero-art'))tx=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>40){showSlide(S.heroI+(dx<0?1:-1));startHero()}},{passive:true});
 
 // ---------- ACTIONS ----------
 function quickAdd(id){const p=PM[id];
@@ -577,9 +700,10 @@ function submit(){const f=S.form,e={};
   if(f.name.trim().length<2)e.name='Вкажіть ім’я';
   if(f.phone.replace(/\D/g,'').length<12)e.phone='Номер у форматі +380 XX XXX XX XX';
   if(f.addr.trim().length<4)e.addr='Вкажіть адресу доставки';
+  if(!biz()&&S.gift.on&&S.gift.name.trim().length<2)e.gname='Вкажіть, кому веземо';
   S.errs=e;if(Object.keys(e).length){render();const k=Object.keys(e)[0];const el=document.getElementById(k);el&&el.focus();return}
   const sub=subtotal();const lines=cart().map(l=>({...l,sum:price(PM[l.id])*l.q}));
-  const o={no:S.orderNo++,biz:biz(),lines,total:sub+fee(sub),date:fmtD(dates()[f.date]),slot:SLOTS[f.slot],city:f.city,addr:f.addr};
+  const o={no:S.orderNo++,biz:biz(),lines,total:sub+fee(sub),date:fmtD(dates()[f.date]),dd:dates()[f.date],slot:SLOTS[f.slot],city:f.city,addr:f.addr,gift:!biz()&&S.gift.on?{...S.gift}:null};S.remind=false;
   S.lastDone=o;if(biz()){const d=new Date();S.history.unshift({no:o.no,date:`${d.getDate()} ${MON[d.getMonth()]}`,lines:cart().map(l=>({...l}))})}
   S.cart[S.mode]=[];go('done');S.stack=[]}
 
@@ -609,11 +733,27 @@ document.addEventListener('click',ev=>{
     case 'slot':S.form.slot=+v;render();break;
     case 'pay':S.form.pay=v;render();break;
     case 'submit':submit();break;
+    case 'hero':showSlide(+v);startHero();break;
+    case 'sortm':S.sortMargin=!S.sortMargin;render();break;
+    case 'gift':S.gift.on=!S.gift.on;render();break;
+    case 'gifthide':S.gift.hide=!S.gift.hide;render();break;
+    case 'remind':S.remind=!S.remind;render();if(S.remind)toast('Нагадаємо за 3 дні — у Telegram');break;
+    case 'guests':S.party.guests=Math.min(80,Math.max(2,S.party.guests+d));render();break;
+    case 'guestsset':S.party.guests=+v;render();break;
+    case 'pcake':S.party.cake=v;render();break;
+    case 'pmac':S.party.mac=!S.party.mac;render();break;
+    case 'partyadd':{const c=partyCalc();addLine(c.p.id,'',c.cakes);if(c.mac){for(let i=0;i<c.mac;i++)addLine('mac',MAC_FL[i%MAC_FL.length],1)}toast(`Набір на ${c.g} гостей у кошику`,true);break}
+    case 'sday':{const dd=+v;const a=S.standing.days;S.standing.days=a.includes(dd)?a.filter(x=>x!==dd):[...a,dd];render();break}
+    case 'sremind':S.standing.remind=!S.standing.remind;render();break;
+    case 'son':S.standing.on=true;S.standing.edit=false;S.standing.skip=false;render();toast('Постійне замовлення увімкнено');break;
+    case 'sedit':S.standing.edit=true;render();break;
+    case 'sskip':S.standing.skip=!S.standing.skip;render();toast(S.standing.skip?'Наступну доставку пропущено':'Доставку повернуто');break;
+    case 'soff':S.standing.on=false;S.standing.edit=false;render();toast('Постійне замовлення вимкнено');break;
     case 'tg':toast('Тут відкриється чат з менеджером у Telegram');break;
     case 'sendcode':{if(S.login.phone.replace(/\D/g,'').length<12){toast('Введіть номер повністю');break}S.login.sent=true;render();setTimeout(()=>{const c=document.getElementById('lcode');c&&c.focus()},50);break}
     case 'login':{if(!/^\d{4}$/.test(S.login.code)){toast('Введіть 4 цифри коду');break}S.logged=true;S.mode='biz';S.stack=[];go('cabinet');break}
     case 'logout':S.logged=false;S.login={phone:'+380 ',sent:false,code:''};S.form.name='';S.form.addr='';S.mode='home';go('home');break;
-    case 'repeat':{const last=S.history[0];last.lines.forEach(l=>addLine(l.id,l.fl,l.q));S.stack=[];go('cart');toast(`Додали ${last.lines.length} позицій з №${last.no}`);break}
+    case 'repeat':{const last=S.history[+v||0];last.lines.forEach(l=>addLine(l.id,l.fl,l.q));S.stack=[];go('cart');toast(`Додали ${last.lines.length} позицій з №${last.no}`);break}
     case 'qq':{const pp=PM[v];const q=qtyOf(v);let n=q+d;if(d>0&&q===0)n=minOf(pp);if(d<0&&q<=minOf(pp))n=0;setLine(v,'',n);render();break}
     case 'flsheet':prefill(v);S.sheet=v;render();break;
     case 'delall':S.cart[S.mode]=cart().filter(l=>l.id!==v);render();break;
@@ -621,7 +761,7 @@ document.addEventListener('click',ev=>{
     case 'sheetadd':{const pp=PM[S.sheet];S.cart[S.mode]=cart().filter(l=>l.id!==pp.id);Object.entries(S.pick).forEach(([f,q])=>addLine(pp.id,f,q));S.sheet=null;S.pick={};toast(`Додано: ${pp.name}`,S.screen!=='cart');break}
   }
 });
-document.addEventListener('input',ev=>{const t=ev.target;if(t.dataset.f){S.form[t.dataset.f]=t.value;if(t.tagName==='SELECT')render()}if(t.dataset.l)S.login[t.dataset.l]=t.value});
+document.addEventListener('input',ev=>{const t=ev.target;if(t.dataset.f){S.form[t.dataset.f]=t.value;if(t.tagName==='SELECT')render()}if(t.dataset.l)S.login[t.dataset.l]=t.value;if(t.dataset.g)S.gift[t.dataset.g]=t.value});
 document.addEventListener('change',ev=>{const t=ev.target;if(t.tagName==='SELECT'&&t.dataset.f){S.form[t.dataset.f]=t.value;render()}});
 document.addEventListener('submit',ev=>ev.preventDefault());
 render();
